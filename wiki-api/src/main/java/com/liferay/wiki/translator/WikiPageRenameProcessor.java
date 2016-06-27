@@ -17,7 +17,7 @@ package com.liferay.wiki.translator;
 /**
  * @author Roberto Díaz
  */
-public interface WikiTitleChangeTranslator {
+public interface WikiPageRenameProcessor {
 
 	public String translate(String content, String title, String newTitle);
 
