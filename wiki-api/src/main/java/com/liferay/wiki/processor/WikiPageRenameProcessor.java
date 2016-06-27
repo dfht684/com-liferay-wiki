@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.translator;
+package com.liferay.wiki.processor;
 
 /**
  * @author Roberto Díaz

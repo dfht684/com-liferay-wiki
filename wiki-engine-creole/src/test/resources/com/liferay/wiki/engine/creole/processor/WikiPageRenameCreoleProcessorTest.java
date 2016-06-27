@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.engine.creole.translator;
+package com.liferay.wiki.engine.creole.processor;
 
 import org.junit.Assert;
 import org.junit.Test;
