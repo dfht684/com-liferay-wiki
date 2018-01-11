@@ -12,17 +12,15 @@
  * details.
  */
 
-package com.liferay.wiki.internal.security.permission;
+package com.liferay.wiki.internal.security.permission.resource;
 
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.StagedPortletPermissionLogic;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.wiki.constants.WikiConstants;
-import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.service.WikiNodeLocalService;
+import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.Dictionary;
 
@@ -37,23 +35,20 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(immediate = true)
-public class WikiNodeModelResourcePermissionRegistrar {
+public class WikiPortletResourcePermissionRegistrar {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put("model.class.name", WikiNode.class.getName());
+		properties.put("resource.name", WikiConstants.RESOURCE_NAME);
 
 		_serviceRegistration = bundleContext.registerService(
-			ModelResourcePermission.class,
-			ModelResourcePermissionFactory.create(
-				WikiNode.class, WikiNode::getNodeId,
-				_wikiNodeLocalService::getWikiNode, _portletResourcePermission,
-				(modelResourcePermission, consumer) -> consumer.accept(
-					new StagedModelPermissionLogic<>(
-						_stagingPermission, WikiConstants.RESOURCE_NAME,
-						WikiNode::getNodeId))),
+			PortletResourcePermission.class,
+			PortletResourcePermissionFactory.create(
+				WikiConstants.RESOURCE_NAME,
+				new StagedPortletPermissionLogic(
+					_stagingPermission, WikiPortletKeys.WIKI)),
 			properties);
 	}
 
@@ -62,15 +57,9 @@ public class WikiNodeModelResourcePermissionRegistrar {
 		_serviceRegistration.unregister();
 	}
 
-	@Reference(target = "(resource.name=" + WikiConstants.RESOURCE_NAME + ")")
-	private PortletResourcePermission _portletResourcePermission;
-
-	private ServiceRegistration<ModelResourcePermission> _serviceRegistration;
+	private ServiceRegistration<PortletResourcePermission> _serviceRegistration;
 
 	@Reference
 	private StagingPermission _stagingPermission;
-
-	@Reference
-	private WikiNodeLocalService _wikiNodeLocalService;
 
 }

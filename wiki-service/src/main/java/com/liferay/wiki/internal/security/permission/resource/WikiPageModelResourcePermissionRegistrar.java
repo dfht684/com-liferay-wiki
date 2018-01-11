@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.internal.security.permission;
+package com.liferay.wiki.internal.security.permission.resource;
 
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.exception.PortalException;
