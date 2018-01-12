@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.navigation.web.internal.security.permission;
+package com.liferay.wiki.web.internal.security.permission.resource;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -27,6 +27,14 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class WikiPagePermission {
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, long classPK, String actionId)
+		throws PortalException {
+
+		return _wikiPageModelResourcePermission.contains(
+			permissionChecker, classPK, actionId);
+	}
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, WikiPage page, String actionId)
