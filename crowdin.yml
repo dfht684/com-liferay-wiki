@@ -1,0 +1,13 @@
+files:
+  - source: '*Language.properties'
+    translation: /%original_path%/Language_%two_letters_code%.properties
+    languages_mapping:
+      two_letters_code:
+        zh-CN: zh_CN
+        zh-TW: zh_TW
+        nl-BE: nl_BE
+        pt-BR: pt_BR
+        pt-PT: pt_PT
+        sr: sr_RS
+        sr-CS: sr_RS_latin
+        hi: hi_IN
